@@ -1,0 +1,34 @@
+{% extends "base.html" %}
+{% block title %}Checklist{% endblock %}
+{% block isi %}
+<h1>Checklist per jenis ruangan</h1>
+<p class="muted">Perubahan berlaku untuk laporan yang dibuat berikutnya. Laporan lama tidak berubah.</p>
+{% for j in jenis_list %}
+<div class="card" id="j-{{ j }}">
+  <h2 style="margin-top:0">{{ j }} <span class="muted">({{ jumlah.get(j, 0) }} ruangan)</span></h2>
+  <div class="scroll"><table class="tabel">
+    {% for t in tmpl[j] %}
+    <tr>
+      <td style="{{ 'text-decoration:line-through;color:#98a2b3' if not t.aktif }}">{{ t.nama_tugas }}</td>
+      <td>
+        <form method="post" class="inline">
+          <input type="hidden" name="_csrf" value="{{ csrf_token }}"><input type="hidden" name="id" value="{{ t.id }}"><input type="hidden" name="jenis" value="{{ j }}"><input type="hidden" name="aksi" value="frekuensi">
+          <select name="frekuensi" onchange="this.form.submit()">{% for f in ('harian','mingguan','bulanan') %}<option {{ 'selected' if t.frekuensi == f }}>{{ f }}</option>{% endfor %}</select>
+        </form>
+      </td>
+      <td>
+        <form method="post"><input type="hidden" name="_csrf" value="{{ csrf_token }}"><input type="hidden" name="id" value="{{ t.id }}"><input type="hidden" name="jenis" value="{{ j }}"><input type="hidden" name="aksi" value="aktif">
+          <button class="sec small" type="submit">{{ 'Matikan' if t.aktif else 'Aktifkan' }}</button></form>
+      </td>
+    </tr>
+    {% else %}<tr><td class="muted">Belum ada butir. Tambahkan di bawah.</td></tr>{% endfor %}
+  </table></div>
+  <form method="post" class="inline" style="margin-top:10px">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}"><input type="hidden" name="aksi" value="tambah"><input type="hidden" name="jenis" value="{{ j }}">
+    <input name="nama_tugas" placeholder="Butir checklist baru" maxlength="150" required style="flex:3 1 220px">
+    <select name="frekuensi"><option>harian</option><option>mingguan</option><option>bulanan</option></select>
+    <button type="submit">Tambah</button>
+  </form>
+</div>
+{% endfor %}
+{% endblock %}

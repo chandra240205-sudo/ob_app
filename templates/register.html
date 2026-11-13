@@ -1,0 +1,41 @@
+{% extends "base.html" %}
+{% block title %}Daftar Akun{% endblock %}
+{% block isi %}
+<div class="card" style="max-width:400px;margin:32px auto">
+  <div style="text-align:center;margin-bottom:8px">
+    <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" style="width:68px;height:68px;object-fit:cover;border-radius:14px;box-shadow:0 2px 6px rgba(0,0,0,0.15)">
+  </div>
+  <h1 style="text-align:center;margin-top:4px">Daftar Akun Baru</h1>
+  <p class="muted" style="text-align:center;margin-top:-6px;margin-bottom:16px">Buat akun untuk mengakses aplikasi Checklist OB ITSB.</p>
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    
+    <label for="nama">Nama Lengkap</label>
+    <input id="nama" name="nama" required autofocus placeholder="Contoh: Budi Santoso">
+    
+    <label for="username">Username</label>
+    <input id="username" name="username" autocapitalize="none" required placeholder="Contoh: budi">
+    <div class="muted" style="font-size:0.8rem;margin-top:2px">Gunakan huruf kecil atau angka tanpa spasi.</div>
+    
+    <label for="peran_pilihan">Peran / Jabatan</label>
+    <select id="peran_pilihan" name="peran_pilihan">
+      <option value="client">Client (Pengguna Ruangan / Klien)</option>
+      <option value="ob_cleaning">Crew OB (Cleaning)</option>
+      <option value="ob_taman">Gardener (Taman)</option>
+      <option value="supervisor">Supervisor (SPV)</option>
+    </select>
+    
+    <label for="password">Password</label>
+    <input id="password" name="password" type="password" required minlength="6" placeholder="Minimal 6 karakter">
+    
+    <label for="konfirmasi_password">Ulangi Password</label>
+    <input id="konfirmasi_password" name="konfirmasi_password" type="password" required minlength="6" placeholder="Ulangi password">
+    
+    <p style="margin-top:20px"><button type="submit" style="width:100%">Daftar Akun</button></p>
+  </form>
+  <div style="margin-top:16px;text-align:center">
+    <p>Sudah punya akun? <a href="{{ url_for('login') }}"><strong>Masuk di sini</strong></a></p>
+  </div>
+</div>
+{% endblock %}
+

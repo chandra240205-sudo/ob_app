@@ -1,0 +1,80 @@
+{% extends "base.html" %}
+{% block title %}Status Ruangan Hari Ini{% endblock %}
+{% block isi %}
+<p><a href="{{ url_for('client_overview') }}">&larr; Kembali ke Permintaan Saya</a></p>
+<h1>Status Kebersihan Ruangan</h1>
+<p class="muted">Pantau status kebersihan ruangan per hari ini ({{ tgl.strftime('%d-%m-%Y') }}).</p>
+
+<form method="get" class="inline" style="margin-bottom:14px">
+  <div>
+    <label for="g" style="margin-top:0">Gedung</label>
+    <select id="g" name="gedung" onchange="this.form.submit()">
+      <option value="">Semua gedung</option>
+      {% for g in daftar_gedung %}<option value="{{ g }}" {% if g == gedung %}selected{% endif %}>{{ g }}</option>{% endfor %}
+    </select>
+  </div>
+  <div>
+    <label for="l" style="margin-top:0">Lantai</label>
+    <select id="l" name="lantai" onchange="this.form.submit()">
+      <option value="">Semua lantai</option>
+      {% for lt in daftar_lantai %}<option value="{{ lt }}" {% if lt == lantai %}selected{% endif %}>{{ lt }}</option>{% endfor %}
+    </select>
+  </div>
+  <noscript><button type="submit" class="sec">Saring</button></noscript>
+</form>
+
+<div class="card scroll">
+  <table class="tabel">
+    <thead>
+      <tr>
+        <th>Ruangan</th>
+        <th>Gedung & Lantai</th>
+        <th>Status Hari Ini</th>
+        <th>Permintaan Khusus</th>
+        <th>Aksi</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for lok in daftar_lokasi %}
+        {% set lap = laporan_hari_ini.get(lok.id) %}
+        {% set req_aktif = permintaan_aktif.get(lok.id) %}
+        <tr>
+          <td><strong>{{ lok.nama }}</strong></td>
+          <td>{{ lok.gedung }}{% if lok.lantai not in ('-', 'semua') %}, lt {{ lok.lantai }}{% endif %}</td>
+          <td>
+            {% if lap %}
+              <span class="chip {{ lap.status }}">{{ STATUS_LABEL[lap.status] }}</span>
+              {% if lap.fotos %}
+                <span class="muted" style="font-size:0.8rem">({{ lap.fotos|length }} foto)</span>
+              {% endif %}
+            {% else %}
+              <span class="muted">-</span>
+            {% endif %}
+          </td>
+          <td>
+            {% if req_aktif %}
+              <span class="chip {{ req_aktif.status }}">{{ STATUS_REQUEST[req_aktif.status] }}</span>
+              <div class="muted" style="font-size:0.8rem;max-width:180px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">
+                "{{ req_aktif.catatan }}"
+              </div>
+            {% else %}
+              <span class="muted">Tidak ada</span>
+            {% endif %}
+          </td>
+          <td>
+            <div style="display:flex;gap:6px;align-items:center">
+              {% if lap and lap.fotos %}
+                <a href="{{ url_for('laporan', lap_id=lap.id) }}" class="btn sec small">Lihat Foto</a>
+              {% endif %}
+              <a href="{{ url_for('client_overview', lokasi_id=lok.id) }}" class="btn small">Request Pembersihan</a>
+            </div>
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="5" class="muted">Tidak ada ruangan ditemukan.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+

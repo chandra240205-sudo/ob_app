@@ -1,0 +1,19 @@
+{% extends "base.html" %}
+{% block title %}Pengguna{% endblock %}
+{% block isi %}
+<h1>Pengguna</h1>
+<div class="card scroll"><table class="tabel">
+  <tr><th>Nama</th><th>Username</th><th>Jabatan</th><th>Status</th><th></th></tr>
+  {% for u in semua %}
+  <tr>
+    <td>{{ u.nama }}</td><td>{{ u.username }}</td><td>{{ u.jabatan }}</td>
+    <td>{{ 'aktif' if u.aktif else 'nonaktif' }}{{ ', belum ganti password' if u.must_change }}</td>
+    <td>{% if u.id != user.id %}
+      <form method="post" style="display:inline"><input type="hidden" name="_csrf" value="{{ csrf_token }}"><input type="hidden" name="id" value="{{ u.id }}">
+        <button class="sec small" name="aksi" value="reset" onclick="return confirm('Kembalikan password {{ u.nama }} ke password awal?')">Reset password</button>
+        <button class="sec small" name="aksi" value="aktif">{{ 'Nonaktifkan' if u.aktif else 'Aktifkan' }}</button>
+      </form>{% endif %}</td>
+  </tr>
+  {% endfor %}
+</table></div>
+{% endblock %}

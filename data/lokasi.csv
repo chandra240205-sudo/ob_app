@@ -1,0 +1,94 @@
+id_lokasi,gedung,lantai,nama_ruangan,jenis_lokasi,kelompok,status_data,catatan
+L001,Gedung Utama,1,Marketing,kantor,cleaning,dari_supervisor,
+L002,Gedung Utama,1,IIRC,kantor,cleaning,dari_supervisor,
+L003,Gedung Utama,1,SDM & Humas,kantor,cleaning,dari_supervisor,
+L004,Gedung Utama,1,Dirdikma,kantor,cleaning,dari_supervisor,
+L005,Gedung Utama,1,Yayasan ITSB,kantor,cleaning,dari_supervisor,
+L006,Gedung Utama,1,Lap. TPS 1,laboratorium,cleaning,dari_supervisor,Supervisor menyebut 'Lap. TPS ada 2 ruangan'; nama 1/2 hanya penanda
+L007,Gedung Utama,1,Lap. TPS 2,laboratorium,cleaning,dari_supervisor,Supervisor menyebut 'Lap. TPS ada 2 ruangan'; nama 1/2 hanya penanda
+L008,Gedung Utama,1,Toilet Perempuan,toilet,cleaning,dari_supervisor,
+L009,Gedung Utama,1,Toilet Laki-laki,toilet,cleaning,dari_supervisor,
+L010,Gedung Utama,1,Toilet Disabilitas,toilet,cleaning,dari_supervisor,
+L011,Gedung Utama,1,CCTV Room,utilitas,cleaning,dari_supervisor,
+L012,Gedung Utama,1,Panel Room,utilitas,cleaning,dari_supervisor,
+L013,Gedung Utama,2,Ruangan Dosen,kantor,cleaning,dari_supervisor,
+L014,Gedung Utama,2,Lap. Komputer 201,laboratorium,cleaning,dari_supervisor,
+L015,Gedung Utama,2,Lap. Fisika 203,laboratorium,cleaning,dari_supervisor,
+L016,Gedung Utama,2,Lap. Unit Proses 205,laboratorium,cleaning,dari_supervisor,
+L017,Gedung Utama,2,Lap. Persiapan 206,laboratorium,cleaning,dari_supervisor,
+L018,Gedung Utama,2,Toilet Dosen Perempuan,toilet,cleaning,dari_supervisor,
+L019,Gedung Utama,2,Toilet Dosen Laki-laki,toilet,cleaning,dari_supervisor,
+L020,Gedung Utama,2,Ruangan 202,kelas,cleaning,usulan_perlu_konfirmasi,Jenis ruangan belum disebut; diasumsikan kelas
+L021,Gedung Utama,2,Ruangan 204,kelas,cleaning,usulan_perlu_konfirmasi,Jenis ruangan belum disebut; diasumsikan kelas
+L022,Gedung Utama,3,Ruangan 301,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L023,Gedung Utama,3,Ruangan 302A,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L024,Gedung Utama,3,Ruangan 302B,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L025,Gedung Utama,3,Ruangan 303A,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L026,Gedung Utama,3,Ruangan 303B,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L027,Gedung Utama,3,Ruangan 305A,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L028,Gedung Utama,3,Ruangan 305B,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L029,Gedung Utama,3,Ruangan 306,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L030,Gedung Utama,3,Ruangan 307,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L031,Gedung Utama,3,Ruangan 308,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L032,Gedung Utama,3,Ruangan 309,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L033,Gedung Utama,3,Ruangan 310A,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L034,Gedung Utama,3,Ruangan 310B,kelas,cleaning,usulan_perlu_konfirmasi,Hanya 301 yang disebut 'ruangan kelas'; sisanya diasumsikan kelas
+L035,Gedung Utama,3,Ruangan SPM 304,kantor,cleaning,usulan_perlu_konfirmasi,Diasumsikan ruang kantor/unit
+L036,Gedung Utama,3,Ruangan LSP,kantor,cleaning,usulan_perlu_konfirmasi,Diasumsikan ruang kantor/unit
+L037,Gedung Utama,3,Perpustakaan 311,perpustakaan,cleaning,dari_supervisor,
+L038,Gedung Utama,3,Toilet Perempuan,toilet,cleaning,dari_supervisor,
+L039,Gedung Utama,3,Toilet Laki-laki,toilet,cleaning,dari_supervisor,
+L040,Gedung Utama,3,Storage Room,gudang,cleaning,dari_supervisor,
+L041,Gedung Utama,3,Janitor Room,gudang,cleaning,dari_supervisor,
+L042,Gedung Utama,3,Panel Room,utilitas,cleaning,dari_supervisor,
+L043,Gedung Utama,4,Aula ITSB,aula,cleaning,dari_supervisor,
+L044,Gedung Utama,4,Ruangan 401,kelas,cleaning,usulan_perlu_konfirmasi,Jenis ruangan belum disebut; diasumsikan kelas
+L045,Gedung Utama,4,Ruangan 402,kelas,cleaning,usulan_perlu_konfirmasi,Jenis ruangan belum disebut; diasumsikan kelas
+L046,Gedung Utama,4,Ruangan 403,kelas,cleaning,usulan_perlu_konfirmasi,Jenis ruangan belum disebut; diasumsikan kelas
+L047,Gedung Utama,4,Ruangan 404,kelas,cleaning,usulan_perlu_konfirmasi,Jenis ruangan belum disebut; diasumsikan kelas
+L048,Gedung Utama,4,Ruangan 405,kelas,cleaning,usulan_perlu_konfirmasi,Jenis ruangan belum disebut; diasumsikan kelas
+L049,Gedung Utama,4,Ruangan 406,kelas,cleaning,usulan_perlu_konfirmasi,Jenis ruangan belum disebut; diasumsikan kelas
+L050,Gedung Utama,4,Toilet Perempuan,toilet,cleaning,dari_supervisor,
+L051,Gedung Utama,4,Toilet Laki-laki,toilet,cleaning,dari_supervisor,
+L052,Gedung Utama,4,Storage Room,gudang,cleaning,dari_supervisor,
+L053,Gedung Utama,4,Janitor Room,gudang,cleaning,dari_supervisor,
+L054,Gedung Utama,4,Panel Room,utilitas,cleaning,dari_supervisor,
+L055,Gedung Utama,semua,Lift,lift,cleaning,usulan_perlu_konfirmasi,"Tidak ada di daftar ruangan, tetapi ada foto pembersihan lift di grup WA; jumlah lift belum diketahui"
+L056,Gedung Utama,1,Tangga Lt 1,tangga,cleaning,dikonfirmasi_tim,Ditambahkan tim; form KBM punya kolom 'Cleaning Tangga'
+L057,Kontainer A,1,Musala,musala,cleaning,dari_supervisor,
+L058,Kontainer A,1,Ruang Informatika,laboratorium,cleaning,usulan_perlu_konfirmasi,Ruang informatika; jenis diasumsikan lab/ruang komputer
+L059,Kontainer A,1,Ruang BEM MPM,kantor,cleaning,dari_supervisor,
+L060,Kontainer A,1,Ruang Workshop Marketing,kantor,cleaning,dari_supervisor,
+L061,Kontainer A,1,Ruang Unit Pengembangan Bisnis,kantor,cleaning,dari_supervisor,
+L062,Kontainer A,1,Ruang Yayasan Lama,kantor,cleaning,dari_supervisor,
+L063,Kontainer A,1,Toilet Perempuan,toilet,cleaning,dari_supervisor,
+L064,Kontainer A,1,Toilet Laki-laki,toilet,cleaning,dari_supervisor,
+L065,Kontainer A,2,Ruang C.201 Lab Simulasi dan Komputasi Tambang,laboratorium,cleaning,dari_supervisor,
+L066,Kontainer A,2,Ruang C.205 Lab Eksplorasi Tambang,laboratorium,cleaning,dari_supervisor,
+L067,Kontainer A,2,Ruang C.202,kelas,cleaning,usulan_perlu_konfirmasi,Jenis diasumsikan kelas/studio
+L068,Kontainer A,2,Ruang C.203 Studio PWK,kelas,cleaning,usulan_perlu_konfirmasi,Jenis diasumsikan kelas/studio
+L069,Kontainer A,2,C.204 Perpustakaan dan Studio PWK,kelas,cleaning,usulan_perlu_konfirmasi,Jenis diasumsikan kelas/studio
+L070,Kontainer A,2,Toilet Perempuan,toilet,cleaning,dari_supervisor,
+L071,Kontainer A,2,Toilet Laki-laki,toilet,cleaning,dari_supervisor,
+L072,Kontainer A,3,Ruang C.301 Studio Desain Produk,kelas,cleaning,dari_supervisor,
+L073,Kontainer A,3,Ruang C.302 Ruang Kelas,kelas,cleaning,dari_supervisor,
+L074,Kontainer B,1,101 Lab Sipil,laboratorium,cleaning,dari_supervisor,
+L075,Kontainer B,2,Lab Kimia 1,laboratorium,cleaning,dari_supervisor,
+L076,Kontainer B,2,Lab Kimia 2,laboratorium,cleaning,dari_supervisor,
+L077,Lainnya,-,UKS,kantor,cleaning,usulan_perlu_konfirmasi,Jenis diasumsikan ruang umum
+L078,Lainnya,-,Pos Sekuriti,pos,cleaning,dari_supervisor,
+L079,Lainnya,-,Toilet Pos Satpam,toilet,cleaning,dari_supervisor,
+L080,Lainnya,-,Ruang Pompa,utilitas,cleaning,dari_supervisor,
+L081,Lainnya,-,Ruang Genset,utilitas,cleaning,dari_supervisor,
+L082,Lainnya,-,Mechanical Electrical,utilitas,cleaning,dari_supervisor,
+L083,Lainnya,-,Gardu Listrik,utilitas,cleaning,dari_supervisor,
+L084,Area Terbuka,-,Area Lobi,area_terbuka,taman,dari_supervisor,Pembagian kerja Gardener; butir ke-7 di daftar kosong
+L085,Area Terbuka,-,Taman Depan Kampus,area_terbuka,taman,dari_supervisor,Pembagian kerja Gardener; butir ke-7 di daftar kosong
+L086,Area Terbuka,-,Area Kantin,area_terbuka,taman,dari_supervisor,Pembagian kerja Gardener; butir ke-7 di daftar kosong
+L087,Area Terbuka,-,Area Parkir,area_terbuka,taman,dari_supervisor,Pembagian kerja Gardener; butir ke-7 di daftar kosong
+L088,Area Terbuka,-,Area Kontainer,area_terbuka,taman,dari_supervisor,Pembagian kerja Gardener; butir ke-7 di daftar kosong
+L089,Area Terbuka,-,Area Meja Batu,area_terbuka,taman,dari_supervisor,Pembagian kerja Gardener; butir ke-7 di daftar kosong
+L090,Gedung Utama,2,Tangga Lt 2,tangga,cleaning,dikonfirmasi_tim,Ditambahkan tim; form KBM punya kolom 'Cleaning Tangga'
+L091,Gedung Utama,3,Tangga Lt 3,tangga,cleaning,dikonfirmasi_tim,Ditambahkan tim; form KBM punya kolom 'Cleaning Tangga'
+L092,Gedung Utama,4,Tangga Lt 4,tangga,cleaning,dikonfirmasi_tim,Ditambahkan tim; form KBM punya kolom 'Cleaning Tangga'
+L093,Gedung Utama,1,Area Lobi dan Selasar,lobi_selasar,cleaning,dikonfirmasi_tim,"Lobi dan selasar disatukan. Beda dengan 'Area Lobi' di Area Terbuka (taman/luar, tugas Gardener); cek ke SPV apakah sama atau terpisah"

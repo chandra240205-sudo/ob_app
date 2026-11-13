@@ -1,0 +1,70 @@
+{% extends "base.html" %}
+{% block title %}{{ lap.lokasi.nama }}{% endblock %}
+{% block isi %}
+<p><a href="{{ url_for('index') if user.peran != 'supervisor' else url_for('dashboard', tgl=lap.tanggal) }}">&larr; Kembali</a></p>
+<h1>{{ lap.lokasi.nama }}</h1>
+<p class="muted">{{ lap.lokasi.gedung }}{% if lap.lokasi.lantai not in ('-', 'semua') %} &middot; lt {{ lap.lokasi.lantai }}{% endif %}
+ &middot; {{ lap.tanggal.strftime('%d-%m-%Y') }} &middot; {{ lap.user.nama }}
+ &middot; <span class="chip {{ lap.status }}">{{ STATUS_LABEL[lap.status] }}</span></p>
+
+{% if lap.catatan_spv %}<div class="flash {{ 'ok' if lap.status == 'dicek' else 'error' }}"><strong>Catatan supervisor:</strong> {{ lap.catatan_spv }}</div>{% endif %}
+
+<div class="card" id="foto">
+  <h2 style="margin-top:0">Foto bukti</h2>
+  <p class="muted">Wajib ada foto sebelum, proses, dan sesudah. Maksimal {{ maks }} foto per jenis.</p>
+  {% for kode, label in jenis_foto %}
+    <h2>{{ label }} <span class="muted">({{ foto[kode]|length }}/{{ maks }})</span></h2>
+    <div class="fotos">
+      {% for f in foto[kode] %}
+        <figure>
+          <a href="{{ url_for('tampil_foto', foto_id=f.id) }}" target="_blank"><img loading="lazy" src="{{ url_for('tampil_foto', foto_id=f.id) }}" alt="Foto {{ label }}"></a>
+          {% if edit %}
+          <form method="post" action="{{ url_for('hapus_foto', lap_id=lap.id, foto_id=f.id) }}" onsubmit="return confirm('Hapus foto ini?')">
+            <input type="hidden" name="_csrf" value="{{ csrf_token }}"><button type="submit" aria-label="Hapus foto">&times;</button>
+          </form>
+          {% endif %}
+        </figure>
+      {% else %}<span class="muted">Belum ada foto.</span>{% endfor %}
+    </div>
+    {% if edit and foto[kode]|length < maks %}
+    <form method="post" action="{{ url_for('unggah_foto', lap_id=lap.id) }}" enctype="multipart/form-data" class="inline">
+      <input type="hidden" name="_csrf" value="{{ csrf_token }}"><input type="hidden" name="jenis" value="{{ kode }}">
+      <input type="file" name="foto" accept="image/*" capture="environment" multiple required>
+      <button type="submit" class="sec">Kirim foto {{ label|lower }}</button>
+    </form>
+    {% endif %}
+  {% endfor %}
+</div>
+
+<form method="post" action="{{ url_for('simpan_checklist', lap_id=lap.id) }}" class="card">
+  <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+  <h2 style="margin-top:0">Checklist</h2>
+  {% for it in lap.items %}
+    <label class="check"><input type="checkbox" name="item" value="{{ it.id }}" {{ 'checked' if it.selesai }} {{ '' if edit else 'disabled' }}> {{ it.nama_tugas }}</label>
+  {% endfor %}
+  {% if edit %}
+  <p style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:0">
+    <button type="submit" name="aksi" value="simpan" class="sec">Simpan checklist</button>
+    <button type="submit" name="aksi" value="selesai" class="ok">Ruangan selesai</button>
+  </p>
+  {% endif %}
+</form>
+
+{% if lap.waktu_mulai %}<p class="muted">Mulai: {{ lap.waktu_mulai.strftime('%H:%M') }}{% if lap.waktu_selesai %} &middot; Selesai: {{ lap.waktu_selesai.strftime('%H:%M') }}{% endif %}
+{% if lap.pemeriksa %} &middot; Diperiksa {{ lap.pemeriksa.nama }} ({{ lap.waktu_periksa.strftime('%d-%m %H:%M') }}){% endif %}</p>{% endif %}
+
+{% if user.peran == 'supervisor' and lap.status in ('selesai', 'dicek') %}
+<div class="card">
+  <h2 style="margin-top:0">Pemeriksaan supervisor</h2>
+  <form method="post">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <label for="cat">Catatan (wajib bila dikembalikan)</label>
+    <textarea id="cat" name="catatan" rows="2" maxlength="500">{{ lap.catatan_spv or '' }}</textarea>
+    <p style="display:flex;gap:10px;flex-wrap:wrap;margin-bottom:0">
+      <button type="submit" formaction="{{ url_for('periksa', lap_id=lap.id) }}" class="ok">Tandai sudah diperiksa</button>
+      <button type="submit" formaction="{{ url_for('buka_kembali', lap_id=lap.id) }}" class="danger">Kembalikan ke OB</button>
+    </p>
+  </form>
+</div>
+{% endif %}
+{% endblock %}

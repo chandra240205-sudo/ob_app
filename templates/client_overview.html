@@ -1,0 +1,94 @@
+{% extends "base.html" %}
+{% block title %}Overview Klien{% endblock %}
+{% block isi %}
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+  <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" style="width:46px;height:46px;object-fit:cover;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.12)">
+  <div>
+    <h1 style="margin:0;font-size:1.5rem">Overview Klien & Permintaan</h1>
+    <p class="muted" style="margin:0">Ajukan permintaan pembersihan ruangan dadakan dan pantau status pengerjaannya.</p>
+  </div>
+</div>
+
+<div class="grid2" style="margin-bottom:16px">
+  <div class="card" style="display:flex;justify-content:space-around;text-align:center;align-items:center">
+    <div>
+      <div style="font-size:1.8rem;font-weight:700;color:var(--err)">{{ stats.menunggu }}</div>
+      <span class="chip menunggu">Menunggu</span>
+    </div>
+    <div>
+      <div style="font-size:1.8rem;font-weight:700;color:var(--warn)">{{ stats.proses }}</div>
+      <span class="chip proses">Diproses</span>
+    </div>
+    <div>
+      <div style="font-size:1.8rem;font-weight:700;color:var(--ok)">{{ stats.selesai }}</div>
+      <span class="chip selesai">Selesai</span>
+    </div>
+  </div>
+
+  <div class="card" style="display:flex;flex-direction:column;justify-content:center">
+    <h2 style="margin:0 0 6px">Ingin cek kebersihan ruangan hari ini?</h2>
+    <p class="muted" style="margin:0 0 10px">Lihat apakah ruangan Anda sudah selesai dibersihkan oleh tim OB hari ini.</p>
+    <div>
+      <a href="{{ url_for('client_ruangan') }}" class="btn sec small">Lihat Status Seluruh Ruangan &rarr;</a>
+    </div>
+  </div>
+</div>
+
+<div class="card">
+  <h2 style="margin-top:0">Ajukan Permintaan Pembersihan</h2>
+  <form method="post" action="{{ url_for('client_overview') }}">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    
+    <label for="lokasi_id">Pilih Ruangan</label>
+    <select id="lokasi_id" name="lokasi_id" required>
+      <option value="">-- Pilih Ruangan / Fasilitas Kampus --</option>
+      {% for l in daftar_lokasi %}
+        <option value="{{ l.id }}" {% if lokasi_dipilih_id == l.id %}selected{% endif %}>
+          {{ l.nama }} ({{ l.gedung }}{% if l.lantai not in ('-', 'semua') %}, lt {{ l.lantai }}{% endif %})
+        </option>
+      {% endfor %}
+    </select>
+
+    <label for="catatan">Kebutuhan / Catatan Khusus</label>
+    <textarea id="catatan" name="catatan" rows="3" required placeholder="Contoh: Lantai kotor terkena tumpahan minuman, atau mohon dirapikan menjelang rapat pukul 14:00..."></textarea>
+
+    <p style="margin-top:12px;margin-bottom:0">
+      <button type="submit">Kirim Permintaan Pembersihan</button>
+    </p>
+  </form>
+</div>
+
+<h2>Daftar Permintaan Saya</h2>
+{% if riwayat %}
+  {% for r in riwayat %}
+    <div class="card">
+      <div class="row">
+        <div>
+          <strong style="font-size:1.05rem">{{ r.lokasi.nama }}</strong>
+          <span class="muted">&middot; {{ r.lokasi.gedung }}{% if r.lokasi.lantai not in ('-', 'semua') %}, lt {{ r.lokasi.lantai }}{% endif %}</span>
+          <div style="margin-top:4px">
+            <em>"{{ r.catatan }}"</em>
+          </div>
+          <div class="muted" style="font-size:0.85rem;margin-top:6px">
+            Diajukan: {{ r.waktu_buat.strftime('%d-%m-%Y %H:%M') }}
+            {% if r.status == 'selesai' and r.waktu_selesai %}
+              &middot; Selesai: {{ r.waktu_selesai.strftime('%d-%m-%Y %H:%M') }}
+            {% endif %}
+          </div>
+          {% if r.catatan_selesai %}
+            <div class="flash ok" style="margin-top:8px;margin-bottom:0;padding:6px 10px;font-size:0.9rem">
+              <strong>Keterangan penanganan:</strong> {{ r.catatan_selesai }}
+            </div>
+          {% endif %}
+        </div>
+        <div style="text-align:right;flex:none">
+          <span class="chip {{ r.status }}">{{ STATUS_REQUEST[r.status] }}</span>
+        </div>
+      </div>
+    </div>
+  {% endfor %}
+{% else %}
+  <div class="card muted">Anda belum pernah mengajukan permintaan pembersihan ruangan.</div>
+{% endif %}
+{% endblock %}
+

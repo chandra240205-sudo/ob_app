@@ -1,0 +1,71 @@
+{% extends "base.html" %}
+{% block title %}Kelola Permintaan Klien{% endblock %}
+{% block isi %}
+<h1>Kelola Permintaan Pembersihan Klien</h1>
+<p class="muted">Daftar permintaan kebersihan dadakan dari pihak klien / pengguna fasilitas kampus.</p>
+
+<div class="card scroll">
+  <table class="tabel">
+    <thead>
+      <tr>
+        <th>Waktu</th>
+        <th>Klien</th>
+        <th>Ruangan</th>
+        <th>Catatan Klien</th>
+        <th>Status</th>
+        <th>Tindak Lanjut</th>
+      </tr>
+    </thead>
+    <tbody>
+      {% for r in daftar_req %}
+        <tr>
+          <td style="white-space:nowrap">{{ r.waktu_buat.strftime('%d-%m-%Y %H:%M') }}</td>
+          <td>{{ r.user.nama }}</td>
+          <td>
+            <strong>{{ r.lokasi.nama }}</strong><br>
+            <span class="muted">{{ r.lokasi.gedung }}{% if r.lokasi.lantai not in ('-', 'semua') %}, lt {{ r.lokasi.lantai }}{% endif %}</span>
+          </td>
+          <td>
+            <em>"{{ r.catatan }}"</em>
+            {% if r.catatan_selesai %}
+              <div class="muted" style="margin-top:4px;font-size:0.85rem">
+                <strong>Catatan SPV:</strong> {{ r.catatan_selesai }}
+              </div>
+            {% endif %}
+          </td>
+          <td><span class="chip {{ r.status }}">{{ STATUS_REQUEST[r.status] }}</span></td>
+          <td>
+            {% if r.status != 'selesai' %}
+              <div style="display:flex;flex-direction:column;gap:6px">
+                {% if r.status == 'menunggu' %}
+                  <form method="post" action="{{ url_for('daftar_request_spv') }}" style="margin:0">
+                    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+                    <input type="hidden" name="id" value="{{ r.id }}">
+                    <input type="hidden" name="aksi" value="proses">
+                    <button type="submit" class="sec small">Tandai Sedang Diproses</button>
+                  </form>
+                {% endif %}
+                
+                <form method="post" action="{{ url_for('daftar_request_spv') }}" style="margin:0" class="inline">
+                  <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+                  <input type="hidden" name="id" value="{{ r.id }}">
+                  <input type="hidden" name="aksi" value="selesai">
+                  <input type="text" name="catatan_selesai" placeholder="Catatan selesai (opsional)" style="padding:4px 8px;font-size:0.85rem;min-width:140px">
+                  <button type="submit" class="ok small">Selesai</button>
+                </form>
+              </div>
+            {% else %}
+              <span class="muted" style="font-size:0.85rem">
+                Selesai pada {{ r.waktu_selesai.strftime('%d-%m %H:%M') if r.waktu_selesai else '-' }}
+              </span>
+            {% endif %}
+          </td>
+        </tr>
+      {% else %}
+        <tr><td colspan="6" class="muted">Belum ada permintaan dari klien.</td></tr>
+      {% endfor %}
+    </tbody>
+  </table>
+</div>
+{% endblock %}
+

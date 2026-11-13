@@ -1,0 +1,46 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Checklist OB{% endblock %} - Checklist OB ITSB</title>
+<link rel="icon" type="image/jpeg" href="{{ url_for('static', filename='logo.jpg') }}">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <a class="brand" href="{{ url_for('index') }}">
+    <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" class="logo-img">
+    <span>Checklist OB ITSB</span>
+  </a>
+  {% if user %}
+  <nav>
+    {% if user.peran == 'supervisor' %}
+      <a href="{{ url_for('dashboard') }}">Dashboard</a>
+      <a href="{{ url_for('penugasan') }}">Penugasan</a>
+      <a href="{{ url_for('kelola_template') }}">Checklist</a>
+      <a href="{{ url_for('kelola_pengguna') }}">Pengguna</a>
+      <a href="{{ url_for('daftar_request_spv') }}">Permintaan Klien</a>
+    {% elif user.peran == 'client' %}
+      <a href="{{ url_for('client_overview') }}">Permintaan Saya</a>
+      <a href="{{ url_for('client_ruangan') }}">Status Ruangan</a>
+    {% else %}
+      <a href="{{ url_for('hari_ini_ob') }}">Tugas hari ini</a>
+    {% endif %}
+    <a href="{{ url_for('ganti_password') }}">Password</a>
+  </nav>
+  <form method="post" action="{{ url_for('logout') }}">
+    <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+    <span class="muted" style="color:#d7eef5">{{ user.nama }}</span>
+    <button class="sec small" type="submit">Keluar</button>
+  </form>
+  {% endif %}
+</header>
+<main>
+  {% for kategori, pesan in get_flashed_messages(with_categories=true) %}
+    <div class="flash {{ kategori }}">{{ pesan }}</div>
+  {% endfor %}
+  {% block isi %}{% endblock %}
+</main>
+</body>
+</html>

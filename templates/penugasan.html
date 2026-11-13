@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Penugasan{% endblock %}
+{% block isi %}
+<h1>Penugasan ruangan</h1>
+<p class="muted">Tentukan OB penanggung jawab tiap ruangan. Berlaku tetap sampai diubah.</p>
+<form method="get" class="inline card">
+  <div><label style="margin-top:0">Gedung</label><select name="gedung"><option value="">Semua</option>{% for x in daftar_gedung %}<option {{ 'selected' if x == gedung }}>{{ x }}</option>{% endfor %}</select></div>
+  <div><label style="margin-top:0">Lantai</label><select name="lantai"><option value="">Semua</option>{% for x in daftar_lantai %}<option {{ 'selected' if x == lantai }}>{{ x }}</option>{% endfor %}</select></div>
+  <button type="submit" class="sec">Saring</button>
+</form>
+<form method="post" class="card">
+  <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+  <input type="hidden" name="gedung" value="{{ gedung }}"><input type="hidden" name="lantai" value="{{ lantai }}">
+  <div class="inline" style="margin-bottom:12px">
+    <div><label style="margin-top:0">Isi semua baris di bawah dengan</label>
+      <select id="semua"><option value="">(kosongkan)</option>{% for u in ob %}<option value="{{ u.id }}">{{ u.nama }}</option>{% endfor %}</select></div>
+    <button type="button" class="sec" onclick="document.querySelectorAll('select.p').forEach(s=>s.value=document.getElementById('semua').value)">Terapkan</button>
+  </div>
+  <div class="scroll"><table class="tabel">
+    <tr><th>Ruangan</th><th>Jenis</th><th>OB</th></tr>
+    {% for l in lokasi %}
+    <tr>
+      <td>{{ l.nama }}<br><span class="muted">{{ l.gedung }} {{ l.lantai if l.lantai not in ('-', 'semua') }}</span></td>
+      <td class="muted">{{ l.jenis }}</td>
+      <td><select class="p" name="p_{{ l.id }}"><option value="">-</option>
+        {% for u in ob %}<option value="{{ u.id }}" {{ 'selected' if tugas.get(l.id) == u.id }}>{{ u.nama }}</option>{% endfor %}</select></td>
+    </tr>
+    {% endfor %}
+  </table></div>
+  <p><button type="submit">Simpan penugasan ({{ lokasi|length }} ruangan)</button></p>
+</form>
+{% endblock %}

@@ -1,0 +1,60 @@
+{% extends "base.html" %}
+{% block title %}Dashboard{% endblock %}
+{% block isi %}
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+  <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" style="width:46px;height:46px;object-fit:cover;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.12)">
+  <div>
+    <h1 style="margin:0;font-size:1.5rem">Dashboard Supervisor</h1>
+    <span class="muted">Monitoring & Evaluasi Kebersihan Ruangan Kampus</span>
+  </div>
+</div>
+<form method="get" class="inline" style="margin-bottom:12px">
+  <div><label for="t" style="margin-top:0">Tanggal</label><input id="t" type="date" name="tgl" value="{{ tgl.isoformat() }}"></div>
+  <button type="submit" class="sec">Lihat</button>
+</form>
+{% if adalah_hari_ini %}
+<form method="post" action="{{ url_for('buat_hari_ini') }}" style="margin-bottom:12px">
+  <input type="hidden" name="_csrf" value="{{ csrf_token }}">
+  <button type="submit">Buat laporan hari ini</button>
+  <span class="muted">(otomatis juga dibuat saat OB membuka aplikasi)</span>
+</form>
+{% endif %}
+{% if belum_ditugaskan %}<div class="flash error">{{ belum_ditugaskan }} ruangan belum punya penanggung jawab. <a href="{{ url_for('penugasan') }}">Atur penugasan</a></div>{% endif %}
+{% if pending_requests %}
+<div class="flash ok" style="background:#e0f2fe;color:#0369a1;border:1px solid #bae6fd">
+  <strong>Permintaan Klien:</strong> Ada {{ pending_requests }} permintaan pembersihan ruangan dari klien yang menunggu penanganan.
+  <a href="{{ url_for('daftar_request_spv') }}" style="font-weight:600;margin-left:6px">Lihat Permintaan &rarr;</a>
+</div>
+{% endif %}
+
+<div class="grid2">
+  <div class="card">
+    <h2 style="margin-top:0">Ringkasan per OB</h2>
+    {% for nama, d in per_ob.items() %}
+      <p style="margin:.4em 0">{{ nama }}: {{ d.selesai }}/{{ d.total }} ruangan</p>
+      <div class="bar"><div style="width:{{ (d.selesai / d.total * 100)|round|int }}%"></div></div>
+    {% else %}<p class="muted">Belum ada laporan pada tanggal ini.</p>{% endfor %}
+  </div>
+  <div class="card">
+    <h2 style="margin-top:0">Status ruangan</h2>
+    {% for s, label in STATUS_LABEL.items() %}
+      <p style="margin:.3em 0"><span class="chip {{ s }}">{{ label }}</span> {{ laporan|selectattr('status', 'equalto', s)|list|length }}</p>
+    {% endfor %}
+  </div>
+</div>
+
+<div class="card scroll">
+  <table class="tabel">
+    <tr><th>Ruangan</th><th>OB</th><th>Checklist</th><th>Foto</th><th>Status</th></tr>
+    {% for l in laporan %}
+    <tr>
+      <td><a href="{{ url_for('laporan', lap_id=l.id) }}">{{ l.lokasi.nama }}</a><br><span class="muted">{{ l.lokasi.gedung }} {{ l.lokasi.lantai if l.lokasi.lantai not in ('-', 'semua') }}</span></td>
+      <td>{{ l.user.nama }}</td>
+      <td>{{ l.items|selectattr('selesai')|list|length }}/{{ l.items|length }}</td>
+      <td>{{ l.fotos|length }}</td>
+      <td><span class="chip {{ l.status }}">{{ STATUS_LABEL[l.status] }}</span></td>
+    </tr>
+    {% endfor %}
+  </table>
+</div>
+{% endblock %}

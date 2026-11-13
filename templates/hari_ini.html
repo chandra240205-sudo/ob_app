@@ -1,0 +1,32 @@
+{% extends "base.html" %}
+{% block title %}Tugas hari ini{% endblock %}
+{% block isi %}
+<div style="display:flex;align-items:center;gap:12px;margin-bottom:12px">
+  <img src="{{ url_for('static', filename='logo.jpg') }}" alt="Logo" style="width:46px;height:46px;object-fit:cover;border-radius:10px;box-shadow:0 1px 3px rgba(0,0,0,0.12)">
+  <div>
+    <h1 style="margin:0;font-size:1.5rem">Tugas Hari Ini</h1>
+    <p class="muted" style="margin:0">{{ tgl.strftime('%d-%m-%Y') }} &middot; {{ selesai }} dari {{ laporan|length }} ruangan selesai</p>
+  </div>
+</div>
+{% if laporan %}
+<div class="bar" style="margin-bottom:14px"><div style="width:{{ (selesai / laporan|length * 100)|round|int }}%"></div></div>
+{% for l in laporan %}
+  <div class="card">
+    <a class="row" href="{{ url_for('laporan', lap_id=l.id) }}">
+      <span><strong>{{ l.lokasi.nama }}</strong><br>
+        <span class="muted">{{ l.lokasi.gedung }}{% if l.lokasi.lantai not in ('-', 'semua') %} &middot; lt {{ l.lokasi.lantai }}{% endif %}
+        &middot; {{ l.items|selectattr('selesai')|list|length }}/{{ l.items|length }} butir &middot; {{ l.fotos|length }} foto</span>
+        {% if permintaan_per_lokasi and l.lokasi_id in permintaan_per_lokasi %}
+          <div style="margin-top:6px;font-size:0.85rem;color:var(--warn)">
+            <strong>⚠️ Permintaan Klien:</strong> "{{ permintaan_per_lokasi[l.lokasi_id].catatan }}"
+          </div>
+        {% endif %}
+      </span>
+      <span class="chip {{ l.status }}">{{ STATUS_LABEL[l.status] }}</span>
+    </a>
+  </div>
+{% endfor %}
+{% else %}
+  <div class="card">Belum ada tugas untuk Anda hari ini. Mintalah supervisor mengisi menu Penugasan.</div>
+{% endif %}
+{% endblock %}

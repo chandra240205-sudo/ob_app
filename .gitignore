@@ -1,0 +1,22 @@
+# Virtual environment
+.venv/
+venv/
+
+# Environment variables and secrets
+.env
+.env.*
+!.env.example
+
+# Python cache
+__pycache__/
+*.py[cod]
+*.pyo
+
+# Local database
+instance/
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploaded files
+uploads/
