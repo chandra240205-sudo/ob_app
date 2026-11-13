@@ -40,16 +40,17 @@ STATUS_REQUEST = {"menunggu": "Menunggu", "proses": "Diproses", "selesai": "Sele
 
 
 def _secret_key():
-    """Kunci rahasia sesi: dibuat otomatis sekali dan disimpan di instance/secret.key."""
+    """Kunci rahasia sesi: prioritas dari env OB_SECRET, fallback tetap di Vercel."""
     if os.environ.get("OB_SECRET"):
         return os.environ["OB_SECRET"]
+    if os.environ.get("VERCEL"):
+        return "kunci-rahasia-ob-app-itsb-2026-aman"
     path = os.path.join(INSTANCE, "secret.key")
     if not os.path.exists(path):
         with open(path, "w") as f:
             f.write(secrets.token_hex(32))
     with open(path) as f:
         return f.read().strip()
-
 
 app = Flask(__name__)
 app.config.update(
@@ -58,6 +59,7 @@ app.config.update(
     MAX_CONTENT_LENGTH=40 * 1024 * 1024,
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
+    SESSION_COOKIE_SECURE=bool(os.environ.get("VERCEL")),
 )
 db.init_app(app)
 with app.app_context():
