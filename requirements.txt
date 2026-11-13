@@ -24,6 +24,8 @@ packaging==26.3
 pillow==13.0.0
 postgrest==2.34.1
 propcache==0.5.4
+psycopg==3.3.9
+psycopg-binary==3.3.9
 psycopg2-binary==2.9.13
 pycparser==3.12
 pydantic==2.14.3
