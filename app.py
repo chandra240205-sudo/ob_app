@@ -56,20 +56,22 @@ db_url = os.environ.get("DATABASE_URL")
 if db_url and db_url.startswith("postgres://"):
     db_url = db_url.replace("postgres://", "postgresql://", 1)
 
-engine_opts = {"pool_pre_ping": True}
-if db_url:
-    engine_opts["connect_args"] = {"options": "-csearch_path=ob_app,public"}
-
 app = Flask(__name__)
 app.config.update(
     SECRET_KEY=_secret_key(),
     SQLALCHEMY_DATABASE_URI=db_url or ("sqlite:///" + os.path.join(INSTANCE, "ob.db")),
-    SQLALCHEMY_ENGINE_OPTIONS=engine_opts,
+    SQLALCHEMY_ENGINE_OPTIONS={"pool_pre_ping": True},
     MAX_CONTENT_LENGTH=40 * 1024 * 1024,
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
     SESSION_COOKIE_SECURE=bool(os.environ.get("VERCEL")),
 )
+
+if db_url:
+    db.metadata.schema = "ob_app"
+    for table in db.metadata.tables.values():
+        table.schema = "ob_app"
+
 db.init_app(app)
 with app.app_context():
     db.create_all()
