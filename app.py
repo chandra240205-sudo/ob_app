@@ -52,10 +52,15 @@ def _secret_key():
     with open(path) as f:
         return f.read().strip()
 
+db_url = os.environ.get("DATABASE_URL")
+if db_url and db_url.startswith("postgres://"):
+    db_url = db_url.replace("postgres://", "postgresql://", 1)
+
 app = Flask(__name__)
 app.config.update(
     SECRET_KEY=_secret_key(),
-    SQLALCHEMY_DATABASE_URI="sqlite:///" + os.path.join(INSTANCE, "ob.db"),
+    SQLALCHEMY_DATABASE_URI=db_url or ("sqlite:///" + os.path.join(INSTANCE, "ob.db")),
+    SQLALCHEMY_ENGINE_OPTIONS={"pool_pre_ping": True},
     MAX_CONTENT_LENGTH=40 * 1024 * 1024,
     SESSION_COOKIE_HTTPONLY=True,
     SESSION_COOKIE_SAMESITE="Lax",
