@@ -1,4 +1,4 @@
-"""Struktur database (tabel) aplikasi Checklist OB.
+"""Struktur database (tabel) aplikasi ITSB CLEAN.
 
 Satu class = satu tabel. Kalau mau tambah kolom/tabel baru, ubah file ini,
 lalu hapus instance/ob.db dan jalankan ulang `python seed.py` (selama masih tahap awal).
