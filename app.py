@@ -23,7 +23,11 @@ from models import (Foto, Laporan, LaporanItem, Lokasi, Penugasan,
 from supabase_client import supabase
 
 BASE = os.path.dirname(os.path.abspath(__file__))
-INSTANCE = os.environ.get("OB_INSTANCE", os.path.join(BASE, "instance"))
+if os.environ.get("VERCEL"):
+    INSTANCE = "/tmp/instance"
+else:
+    INSTANCE = os.environ.get("OB_INSTANCE", os.path.join(BASE, "instance"))
+
 UPLOADS = os.path.join(INSTANCE, "uploads")
 os.makedirs(UPLOADS, exist_ok=True)
 
